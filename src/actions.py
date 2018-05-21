@@ -24,6 +24,12 @@ import urllib.request
 import pafy
 import pychromecast
 
+# Default Chromecast IP
+chromecast_ip = ""
+cc_dev = pychromecast.get_chromecasts()
+if len(cc_dev) > 0:
+    chromecast_ip = cc_dev[0].host
+    
 #API Key for YouTube and KS Search Engine
 google_cloud_api_key='ENTER-YOUR-GOOGLE-CLOUD-API-KEY-HERE'
 
@@ -1270,7 +1276,7 @@ def YouTube_No_Autoplay(phrase):
 def chromecast_play_video(phrase):
     # Chromecast declarations
     # Do not rename/change "TV" its a variable
-    TV = pychromecast.Chromecast("192.168.1.13") #Change ip to match the ip-address of your Chromecast
+    TV = pychromecast.Chromecast(chromecast_ip) #Change ip to match the ip-address of your Chromecast
     mc = TV.media_controller
     idx=phrase.find('play')
     query=phrase[idx:]
@@ -1289,7 +1295,7 @@ def chromecast_play_video(phrase):
 def chromecast_control(action):
     # Chromecast declarations
     # Do not rename/change "TV" its a variable
-    TV = pychromecast.Chromecast("192.168.1.13") #Change ip to match the ip-address of your Chromecast
+    TV = pychromecast.Chromecast(chromecast_ip) #Change ip to match the ip-address of your Chromecast
     mc = TV.media_controller
     if 'pause'.lower() in str(action).lower():
         TV.wait()
